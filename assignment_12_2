@@ -1,0 +1,39 @@
+import urllib
+from BeautifulSoup import *
+import re
+flist = list()
+
+count = raw_input("Enter count: ")
+count = int(count)
+pos = raw_input("Enter position: ")
+pos = int(pos)
+
+
+url = "http://pr4e.dr-chuck.com/tsugi/mod/python-data/data/known_by_Fikret.html"
+html = urllib.urlopen(url).read().decode()
+soup = BeautifulSoup(html)
+
+# Retrieve all of the anchor tags
+tags = soup('a')
+for tag in tags:
+    lst = tag.get('href', None)
+    flist.append(lst) #list of URLs from the Fikret.html
+
+print "Retrieving: ", url
+
+
+while count > 0:
+    count -= 1
+    url1 = flist[pos-1]
+   
+    url1 = str(url1)    
+    html = urllib.urlopen(url1).read().decode()
+       
+    soup = BeautifulSoup(html)
+    tags = soup('a')
+    
+    for tag in tags:
+        lst = tag.get('href', None)
+        flist.append(lst) #list of URLs from the all other
+    
+    print "Retrieving: ", url1
